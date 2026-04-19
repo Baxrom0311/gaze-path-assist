@@ -36,23 +36,21 @@ export const uz = {
   },
   team: {
     sectionLabel: "Jamoa",
-    title: "To'rt kishi. Bitta maqsad.",
-    subtitle: "AI muhandisligi, dizayn va ko'maklashish bo'yicha tajribani birlashtiruvchi ko'p sohali jamoa.",
+    title: "Ikki kishi. Bitta maqsad.",
+    subtitle: "Texnologiya va tibbiyotni birlashtiruvchi kuchli jamoa.",
     members: [
-      { name: "Jasur", role: "Mahsulot rahbari va AI muhandisi", skills: ["Python", "MediaPipe", "TensorFlow Lite"], stack: "AI/ML · Mobil" },
-      { name: "Dilnoza", role: "UX/UI dizayner", skills: ["Figma", "Foydalanuvchi tadqiqoti", "Imkoniyatli dizayn"], stack: "Dizayn tizimlari" },
-      { name: "Bobur", role: "Frontend dasturchi", skills: ["React Native", "JavaScript", "WebRTC"], stack: "Mobil · Web" },
-      { name: "Nodira", role: "Backend dasturchi", skills: ["Node.js", "Firebase", "REST API"], stack: "Bulut · Backend" },
+      { name: "Baxrom Reyimberganov", role: "Fullstack dasturchi & IoT muhandis", skills: ["React", "Node.js", "Python", "IoT", "MediaPipe"], stack: "Fullstack · IoT · AI", photo: "/baxrom.jpg" },
+      { name: "Hilola Safayeva", role: "Tibbiyot bo'yicha izlanuvchi", skills: ["Tibbiy tadqiqot", "Klinik sinovlar", "AAC metodologiya"], stack: "Tibbiyot · Tadqiqot", photo: "/hilola.jpg" },
     ],
   },
   whyTeam: {
     sectionLabel: "Nega biz",
     title: "Nega bizning jamoamiz buni hal qila oladi",
     points: [
-      { title: "Shaxsiy bog'liqlik", body: "Jamoamiz a'zolarining bir nechtasi Markaziy Osiyoda harakat nuqsonlari bo'lgan odamlar bilan oilaviy yoki jamoaviy aloqalarga ega. Bu shunchaki loyiha emas — bu shaxsiy." },
-      { title: "Birlashgan tajriba", body: "AI/ML muhandisligi, ko'maklashishga yo'naltirilgan UX, mobil va bulut backend — barchasi bir tomda." },
+      { title: "Texnologiya + Tibbiyot", body: "Fullstack dasturchi va tibbiyot izlanuvchisi birgalikda — texnik yechim va klinik bilim bir jamoada." },
       { title: "Ishlaydigan prototip", body: "Biz g'oyalarni emas, kodlarni taqdim qilamiz. Hoziroq eyetracking.boos.uz da sinab ko'ring." },
       { title: "Mahalliy bozorni tushunish", body: "O'zbekistonda o'zbek tilidagi AAC vositalari yo'q. Biz foydalanuvchilar, shifokorlar va tilga eng yaqinmiz." },
+      { title: "IoT va AI tajribasi", body: "Baxromning IoT va AI sohasidagi tajribasi qurilma darajasida ko'z kuzatish tizimini yaratish imkonini beradi." },
     ],
   },
   roadmap: {

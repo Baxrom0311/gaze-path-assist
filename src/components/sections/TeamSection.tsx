@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { Github, Linkedin } from "lucide-react";
 
-interface Member { name: string; role: string; skills: string[]; stack: string }
-
-const COLORS = ["gradient-teal", "gradient-warm", "gradient-teal", "gradient-warm"];
+interface Member {
+  name: string;
+  role: string;
+  skills: string[];
+  stack: string;
+  photo: string;
+}
 
 export const TeamSection = () => {
   const { t } = useTranslation();
@@ -29,38 +32,38 @@ export const TeamSection = () => {
           <p className="text-muted-foreground text-lg">{t("team.subtitle")}</p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {members.map((m, i) => (
             <motion.div
               key={m.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group bg-card border border-border rounded-2xl p-6 shadow-soft hover:shadow-card transition-smooth hover:-translate-y-1"
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+              className="group bg-card border border-border rounded-2xl p-6 shadow-soft hover:shadow-card transition-smooth hover:-translate-y-1 text-center"
             >
-              <div className={`h-16 w-16 rounded-2xl ${COLORS[i]} flex items-center justify-center text-2xl font-display font-bold text-primary-foreground shadow-glow mb-4`}>
-                {m.name.charAt(0)}
+              <div className="relative w-28 h-28 mx-auto mb-5">
+                <div className="absolute inset-0 rounded-full gradient-teal opacity-20 blur-xl scale-110" />
+                <img
+                  src={m.photo}
+                  alt={m.name}
+                  className="relative w-28 h-28 rounded-full object-cover border-3 border-primary/20 shadow-glow"
+                />
               </div>
               <h3 className="font-display font-bold text-xl">{m.name}</h3>
-              <p className="text-sm text-primary font-semibold mt-1 mb-3">{m.role}</p>
-              <div className="flex flex-wrap gap-1.5 mb-4">
+              <p className="text-sm text-primary font-semibold mt-1 mb-4">{m.role}</p>
+              <div className="flex flex-wrap justify-center gap-1.5 mb-4">
                 {m.skills.map((s) => (
-                  <span key={s} className="text-xs px-2 py-1 rounded-md bg-secondary text-secondary-foreground font-medium">
+                  <span
+                    key={s}
+                    className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium"
+                  >
                     {s}
                   </span>
                 ))}
               </div>
-              <div className="text-xs text-muted-foreground border-t border-border pt-3 mb-3">
+              <div className="text-xs text-muted-foreground border-t border-border pt-3">
                 <span className="font-semibold text-foreground/70">Stack:</span> {m.stack}
-              </div>
-              <div className="flex gap-2">
-                <a href="#" aria-label="GitHub" className="h-8 w-8 rounded-lg bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-smooth">
-                  <Github className="h-4 w-4" />
-                </a>
-                <a href="#" aria-label="LinkedIn" className="h-8 w-8 rounded-lg bg-secondary hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-smooth">
-                  <Linkedin className="h-4 w-4" />
-                </a>
               </div>
             </motion.div>
           ))}

@@ -36,32 +36,22 @@ export const en = {
   },
   team: {
     sectionLabel: "The Team",
-    title: "Four people. One mission.",
-    subtitle: "A multidisciplinary team combining AI engineering, design, and accessibility expertise.",
+    title: "Two people. One mission.",
+    subtitle: "A powerful team combining technology and medical expertise.",
     members: [
       {
-        name: "Jasur",
-        role: "Product Lead & AI Engineer",
-        skills: ["Python", "MediaPipe", "TensorFlow Lite"],
-        stack: "AI/ML · Mobile",
+        name: "Baxrom Reyimberganov",
+        role: "Fullstack Developer & IoT Engineer",
+        skills: ["React", "Node.js", "Python", "IoT", "MediaPipe"],
+        stack: "Fullstack · IoT · AI",
+        photo: "/baxrom.jpg",
       },
       {
-        name: "Dilnoza",
-        role: "UX/UI Designer",
-        skills: ["Figma", "User Research", "Accessibility Design"],
-        stack: "Design Systems",
-      },
-      {
-        name: "Bobur",
-        role: "Frontend Developer",
-        skills: ["React Native", "JavaScript", "WebRTC"],
-        stack: "Mobile · Web",
-      },
-      {
-        name: "Nodira",
-        role: "Backend Developer",
-        skills: ["Node.js", "Firebase", "REST API"],
-        stack: "Cloud · Backend",
+        name: "Hilola Safayeva",
+        role: "Medical Researcher",
+        skills: ["Medical Research", "Clinical Trials", "AAC Methodology"],
+        stack: "Medicine · Research",
+        photo: "/hilola.jpg",
       },
     ],
   },
@@ -70,12 +60,8 @@ export const en = {
     title: "Why our team can solve this",
     points: [
       {
-        title: "Personal connection",
-        body: "Several team members have family or community ties to people living with motor disabilities in Central Asia. This isn't just a project — it's personal.",
-      },
-      {
-        title: "Combined expertise",
-        body: "AI/ML engineering, accessibility-first UX, native mobile, and cloud backend — all under one roof.",
+        title: "Technology + Medicine",
+        body: "A fullstack developer and medical researcher working together — technical solutions backed by clinical knowledge.",
       },
       {
         title: "Working prototype",
@@ -84,6 +70,10 @@ export const en = {
       {
         title: "Local market understanding",
         body: "Uzbekistan has zero AAC tools available natively in Uzbek. We're closest to the users, the clinicians, and the language.",
+      },
+      {
+        title: "IoT & AI expertise",
+        body: "Baxrom's experience in IoT and AI enables building a device-level eye tracking system from the ground up.",
       },
     ],
   },
