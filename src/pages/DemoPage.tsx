@@ -4,10 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ChatWidget } from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
-import { Play, ExternalLink, Sparkles } from "lucide-react";
-
-// EASY TO REPLACE: drop in a YouTube ID like "dQw4w9WgXcQ" to embed the actual video
-const YOUTUBE_VIDEO_ID: string | null = null;
+import { ExternalLink, Sparkles } from "lucide-react";
 
 const DemoPage = () => {
   const { t } = useTranslation();
@@ -40,29 +37,18 @@ const DemoPage = () => {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="aspect-video rounded-3xl overflow-hidden shadow-card border border-border mb-12 relative"
+            className="rounded-3xl overflow-hidden shadow-card border border-border mb-12"
           >
-            {YOUTUBE_VIDEO_ID ? (
-              <iframe
-                src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`}
-                title="EyeTracking demo"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            ) : (
-              <div className="relative w-full h-full gradient-problem flex items-center justify-center group cursor-pointer">
-                <div className="absolute inset-0 opacity-20" style={{
-                  backgroundImage: "radial-gradient(circle at 30% 30%, hsl(var(--primary)) 0%, transparent 50%), radial-gradient(circle at 70% 70%, hsl(var(--accent)) 0%, transparent 50%)",
-                }} />
-                <div className="relative text-center text-white p-8">
-                  <div className="h-20 w-20 mx-auto rounded-full gradient-teal flex items-center justify-center shadow-glow mb-4 group-hover:scale-110 transition-bounce animate-float">
-                    <Play className="h-8 w-8 ml-1" fill="currentColor" />
-                  </div>
-                  <p className="text-lg font-medium">{t("demoPage.videoPlaceholder")}</p>
-                </div>
-              </div>
-            )}
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full h-auto"
+              poster="/baxrom.jpg"
+            >
+              <source src="/demo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </motion.div>
 
           {/* Description */}
