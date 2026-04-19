@@ -1,7 +1,7 @@
-// Edge function: chat with Claude Haiku via Anthropic API
+// Edge function: chat with DeepSeek via OpenAI-compatible API
 import { corsHeaders } from "https://esm.sh/@supabase/supabase-js@2.95.0/cors";
 
-interface Message { role: "user" | "assistant"; content: string }
+interface Message { role: "user" | "assistant" | "system"; content: string }
 
 const SYSTEM_PROMPT = `You are a helpful, concise, friendly assistant for EyeTracking — an assistive eye-tracking AAC startup based in Uzbekistan.
 
@@ -29,10 +29,10 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   try {
-    const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
-    if (!ANTHROPIC_API_KEY) {
+    const DEEPSEEK_API_KEY = Deno.env.get("DEEPSEEK_API_KEY");
+    if (!DEEPSEEK_API_KEY) {
       return new Response(
-        JSON.stringify({ error: "ANTHROPIC_API_KEY is not configured" }),
+        JSON.stringify({ error: "DEEPSEEK_API_KEY is not configured" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -47,7 +47,7 @@ Deno.serve(async (req) => {
 
     const messages: Message[] = body.messages
       .filter((m: any) => m && (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
-      .slice(-20) // limit history
+      .slice(-20)
       .map((m: Message) => ({ role: m.role, content: m.content.slice(0, 2000) }));
 
     if (messages.length === 0 || messages[messages.length - 1].role !== "user") {
@@ -60,54 +60,35 @@ Deno.serve(async (req) => {
     const lang = typeof body.language === "string" ? body.language : "uz";
     const langHint = `\n\nThe user's interface language is: ${lang}. Default to that language unless their message is clearly in another language.`;
 
-    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    const resp = await fetch("https://api.deepseek.com/chat/completions", {
       method: "POST",
       headers: {
-        "x-api-key": ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
+        "Authorization": `Bearer ${DEEPSEEK_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5",
+        model: "deepseek-chat",
         max_tokens: 600,
-        system: SYSTEM_PROMPT + langHint,
-        messages,
+        temperature: 0.7,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT + langHint },
+          ...messages,
+        ],
       }),
     });
 
     if (!resp.ok) {
       const errText = await resp.text();
-      console.error("Anthropic error", resp.status, errText);
+      console.error("DeepSeek error", resp.status, errText);
       if (resp.status === 429) {
         return new Response(JSON.stringify({ error: "Rate limited. Please wait a moment." }), {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      // Fallback: try claude-3-5-haiku-latest if model not found
-      if (resp.status === 404 || errText.includes("model")) {
-        const retry = await fetch("https://api.anthropic.com/v1/messages", {
-          method: "POST",
-          headers: {
-            "x-api-key": ANTHROPIC_API_KEY,
-            "anthropic-version": "2023-06-01",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "claude-3-5-haiku-latest",
-            max_tokens: 600,
-            system: SYSTEM_PROMPT + langHint,
-            messages,
-          }),
+      if (resp.status === 401) {
+        return new Response(JSON.stringify({ error: "Invalid DeepSeek API key" }), {
+          status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
-        if (retry.ok) {
-          const data = await retry.json();
-          const reply = data.content?.[0]?.text ?? "";
-          return new Response(JSON.stringify({ reply }), {
-            status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
-          });
-        }
-        const retryText = await retry.text();
-        console.error("Retry also failed", retry.status, retryText);
       }
       return new Response(JSON.stringify({ error: "AI service error" }), {
         status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -115,7 +96,7 @@ Deno.serve(async (req) => {
     }
 
     const data = await resp.json();
-    const reply = data.content?.[0]?.text ?? "";
+    const reply = data.choices?.[0]?.message?.content ?? "";
     return new Response(JSON.stringify({ reply }), {
       status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
